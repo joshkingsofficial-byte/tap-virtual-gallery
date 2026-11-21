@@ -17,7 +17,7 @@ jobs:
       - name: Unpack site
         run: |
           cat pack/site.tar.b64.part* > site.tar.b64
-          echo "c1b0cd5864b92e9b39687bb8ac33594e62d90b5a8e8728f2e4e5ba472d238588  site.tar.b64" | sha256sum -c -
+          echo "d024a5afd2e1a9051237cf84782f5f6bc96a8ff423db22ce7dafd8b98557e4eb  site.tar.b64" | sha256sum -c -
           mkdir _site
           base64 -d site.tar.b64 | tar -x -C _site
           touch _site/.nojekyll
