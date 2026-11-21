@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>TAP Contemporary — Virtual Gallery | Chelmsford</title>
+<meta name="description" content="Walk through TAP Contemporary's current works on display in Chelmsford — a virtual gallery concept featuring the gallery's real collection." />
+<meta property="og:title" content="TAP Contemporary — Virtual Gallery" />
+<meta property="og:description" content="Scroll to walk the gallery. Click a work to view it." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 fill=%22%23111%22/%3E%3Ctext x=%2232%22 y=%2242%22 font-family=%22Georgia%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22%3ETAP%3C/text%3E%3C/svg%3E" />
+<meta name="theme-color" content="#f4f2ee" />
+  <script type="module" crossorigin src="./assets/index-CXwyLlnz.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CiFCUmQv.css">
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<header class="hud-top" id="hud">
+  <a class="brand" href="#" id="brandLink" aria-label="TAP Contemporary home"><span class="brand-mark">TAP</span><span class="brand-sub">Contemporary · Chelmsford</span></a>
+  <nav class="hud-nav">
+    <button class="link" id="listBtn" type="button">View as list</button>
+    <button class="link" id="visitBtn" type="button">Visit</button>
+    <button class="basket-btn" id="basketBtn" type="button" aria-label="Open basket">Basket <span class="count" id="basketCount">0</span></button>
+  </nav>
+</header>
+
+<div class="hud-bottom" id="hudBottom" aria-live="polite">
+  <p class="eyebrow" id="collCount">Collection</p>
+  <h2 class="coll-title" id="collTitle">Colour &amp; Form</h2>
+  <p class="hint" id="walkHint">WASD or click the floor to walk · Drag to look · Scroll for the guided tour · Click a work</p>
+  <div class="progress"><span id="progressBar"></span></div>
+</div>
+
+<section class="intro" id="intro">
+  <div class="intro-inner">
+    <p class="eyebrow">TAP Contemporary · Turner Art Perspective</p>
+    <h1 class="intro-title">Current Works<br /><em>on Display</em></h1>
+    <p class="intro-copy">Walk freely through a 3D recreation of our Chelmsford gallery — <span id="introCount">32</span> works across four collections. Roam the bays, click any piece to step closer, or ask the guide.</p>
+    <div class="intro-actions">
+      <button class="btn-black" id="enterBtn" type="button">Enter the gallery</button>
+      <button class="btn-ghost" id="introListBtn" type="button">View as list</button>
+    </div>
+    <p class="disclaimer intro-disc" role="note">Concept demo only. This site is an unofficial showcase and does not process any purchases. No payments, orders or artworks are sent to or handled by the site's creator. All sales and enquiries are handled directly by Turner Art Perspective (TAP Contemporary).</p>
+    <p class="loading" id="loading">Preparing the gallery…</p>
+  </div>
+  <footer class="site-footer intro-footer" data-footer></footer>
+</section>
+
+<section class="product" id="product" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+  <button class="back-btn" id="backBtn" type="button">← Back to the wall</button>
+  <div class="p-media" id="pMedia">
+    <img id="pImg" alt="" decoding="async" />
+    <button class="zoom-btn" id="zoomBtn" type="button">View larger</button>
+  </div>
+  <div class="p-info" id="pInfo">
+    <p class="crumbs" id="pCrumbs"></p>
+    <p class="p-artist" id="pArtist"></p>
+    <h1 class="p-title" id="pTitle"></h1>
+    <p class="p-price" id="pPrice"></p>
+    <div class="p-desc" id="pDesc"></div>
+    <div class="chips" id="pChips"></div>
+    <div class="qty-row">
+      <span class="label">Quantity</span>
+      <div class="qty"><button type="button" disabled aria-label="Decrease">−</button><span>1</span><button type="button" disabled aria-label="Increase">+</button></div>
+      <span class="qty-note">One per order — availability confirmed by the gallery</span>
+    </div>
+    <button class="btn-black wide" id="addBtn" type="button">Add to basket</button>
+    <p class="disclaimer box-disc" role="note">Concept demo only. This site is an unofficial showcase and does not process any purchases. No payments, orders or artworks are sent to or handled by the site's creator. All sales and enquiries are handled directly by Turner Art Perspective (TAP Contemporary).</p>
+    <div class="p-links">
+      <a id="officialLink" target="_blank" rel="noopener">View on turnerartperspective.com ↗</a>
+      <a id="enquireLink">Enquire about this work</a>
+    </div>
+    <div class="accordions" id="pAcc"></div>
+    <p class="scroll-out">Scroll up at the top, swipe down or press Esc to return to the wall</p>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" hidden><img id="lbImg" alt="" /><button class="lb-close" type="button" id="lbClose">Close</button></div>
+
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Basket">
+  <div class="drawer-head"><h2>Your basket</h2><button class="link" id="drawerClose" type="button">Close</button></div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+<div class="scrim" id="scrim" hidden></div>
+
+<section class="listview" id="listview" aria-hidden="true">
+  <div class="list-head">
+    <div><p class="eyebrow">TAP Contemporary</p><h1>Current Works on Display</h1></div>
+    <button class="btn-ghost" id="listClose" type="button">Walk the gallery</button>
+  </div>
+  <div id="listGrid"></div>
+  <footer class="site-footer" data-footer></footer>
+</section>
+
+<div class="modal" id="visitModal" hidden role="dialog" aria-modal="true" aria-labelledby="visitTitle">
+  <div class="modal-card">
+    <button class="link modal-close" type="button" data-close>Close</button>
+    <p class="eyebrow">Visit</p>
+    <h2 id="visitTitle">See the works in person</h2>
+    <div data-visit></div>
+  </div>
+</div>
+
+<p class="demo-note" id="demoNote" role="note"><strong>Concept demo only</strong> — no purchases are processed here and nothing is sent to the site's creator. Sales are handled by Turner Art Perspective.</p>
+<div class="joy" id="joy" aria-hidden="true"><div class="joy-knob" id="joyKnob"></div></div>
+<button class="guide-tag" id="guideTag" type="button" aria-label="Ask the gallery guide">Ask the guide</button>
+<button class="guide-fab" id="guideFab" type="button">Ask the guide</button>
+<aside class="chat" id="chat" aria-hidden="true" aria-label="Gallery guide chat">
+  <div class="chat-head"><div><p class="eyebrow" style="margin:0 0 2px">Gallery guide</p><h2>How can I help?</h2></div><button class="link" id="chatClose" type="button">Close</button></div>
+  <p class="disclaimer chat-disc" role="note">Concept demo only. This site is an unofficial showcase and does not process any purchases. No payments, orders or artworks are sent to or handled by the site's creator. All sales and enquiries are handled directly by Turner Art Perspective (TAP Contemporary).</p>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <div class="chat-chips" id="chatChips"></div>
+  <form class="chat-form" id="chatForm" autocomplete="off"><input id="chatInput" type="text" placeholder="Ask about a work, artist, price…" aria-label="Message the guide" maxlength="200" /><button type="submit" class="btn-black">Send</button></form>
+  <p class="chat-note">Scripted guide — answers come only from the gallery's listed works and details.</p>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+</body>
+</html>
