@@ -17,7 +17,7 @@ jobs:
       - name: Unpack site
         run: |
           cat pack/site.tar.b64.part* > site.tar.b64
-          echo "262e2650fa6cdaf1a66d14e1d28eda75a5ef6a4daa234ddbdd55a8fc77f33b41  site.tar.b64" | sha256sum -c -
+          echo "bbba1ce4c236e4ba80c6fe3bedb2eefc7cda8caa67a57cf3899fa9558d718c24  site.tar.b64" | sha256sum -c -
           mkdir _site
           base64 -d site.tar.b64 | tar -x -C _site
           touch _site/.nojekyll
@@ -31,9 +31,3 @@ jobs:
           git add -A
           git commit -m "Publish site from ${GITHUB_SHA}"
           git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
-      - name: Try to enable Pages from gh-pages
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -X POST repos/${GITHUB_REPOSITORY}/pages -f 'source[branch]=gh-pages' -f 'source[path]=/' || gh api repos/${GITHUB_REPOSITORY}/pages
